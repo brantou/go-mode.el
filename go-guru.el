@@ -138,6 +138,11 @@
     "---"
     ["Set pointer analysis scope..." go-guru-set-scope t]))
 
+(defun go-guru--read-scope ()
+  "Read go-guru-scope from the minibuffer."
+  (completing-read-multiple "guru-scope (comma-separated): "
+                            (go-packages) nil nil nil 'go-guru--scope-history))
+
 ;;;###autoload
 (defun go-guru-set-scope ()
   "Set the scope for the Go guru, prompting the user to edit the previous scope.
@@ -152,14 +157,8 @@ A pattern preceded by '-' is negative, so the scope
 	encoding/...,-encoding/xml
 matches all encoding packages except encoding/xml."
   (interactive)
-  (let ((scope (read-from-minibuffer "Go guru scope: "
-				     go-guru-scope
-				     nil
-				     nil
-				     'go-guru--scope-history)))
-    (if (string-equal "" scope)
-	(error "You must specify a non-empty scope for the Go guru"))
-    (setq go-guru-scope scope)))
+  (let ((scope (go-guru--read-scope)))
+    (setq go-guru-scope (string-join scope ","))))
 
 (defun go-guru--set-scope-if-empty ()
   (if (string-equal "" go-guru-scope)
@@ -552,9 +551,9 @@ end point."
 
 (provide 'go-guru)
 
-;; Local variables:
+;; Local Variables:
 ;; indent-tabs-mode: t
 ;; tab-width: 8
-;; End
+;; End:
 
 ;;; go-guru.el ends here
