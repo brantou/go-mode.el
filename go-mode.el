@@ -8,7 +8,6 @@
 
 ;; Author: The go-mode Authors
 ;; Version: 1.5.0
-;; Package-Version: 20180327.830
 ;; Keywords: languages go
 ;; URL: https://github.com/dominikh/go-mode.el
 ;;
